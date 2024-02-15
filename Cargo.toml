@@ -1,0 +1,42 @@
+[package]
+name = "uvm"
+version = "0.1.0"
+edition = "2021"
+categories = ["command-line-interface"]
+keywords = ["version"]
+license = "MIT"
+description = "Unified version manager, support Java, Golang, NodeJS."
+repository = "https://github.com/jinyuli/uvm"
+readme = "README.md"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+argh = "0.1.12"
+toml = "0.8.8"
+serde = "1.0.194"
+directories = "5.0.1"
+thiserror = "1.0.56"
+scraper = "0.18.1"
+reqwest = { version = "0.11.23", features = [ "blocking", "stream" ] }
+indicatif = "0.17.7"
+log = "0.4.20"
+log4rs = "1.2.0"
+tokio = { version = "1.35.1", features = [ "full" ] }
+regex = "1.10.2"
+semver = "1.0.21"
+zip = "0.6.6"
+colored = "2.1.0"
+mockall = "0.12.1"
+serde_json = "1.0.111"
+sevenz-rust = "0.5.4"
+url = "2.5.0"
+sha2 = "0.10.8"
+bytes = "1.5.0"
+itertools = "0.12.0"
+octocrab = "0.33.2"
+md-5 = "0.10.6"
+flate2 = "1.0.28"
+tar = "0.4.40"
+self_update = { version = "0.39.0", features = [ "archive-tar", "archive-zip", "tar", "zip" ]}
+futures-util = "0.3.30"
