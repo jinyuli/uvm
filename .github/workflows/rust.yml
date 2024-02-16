@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install Rust
+        run: rustup component add rustfmt clippy
       - name: Cargo Cache
         uses: actions/cache@v4
         with:
@@ -96,9 +98,16 @@ jobs:
     needs: [build, test]
     runs-on: ${{ matrix.os }}
     if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Add musl
+        if: endsWith(matrix.target, 'musl')
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: musl-tools
       - name: Install Rust
         run: |
           rustup target add ${{ matrix.target }}
