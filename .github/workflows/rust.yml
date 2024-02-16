@@ -13,6 +13,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
       - name: Cargo Cache
         uses: actions/cache@v4
         with:
@@ -25,7 +31,10 @@ jobs:
           key: ${{ runner.os }}-cargo-build-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-
       - name: Build project
-        run: cargo build --workspace --release
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --workspace --release
 
   test:
     strategy:
@@ -35,8 +44,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install Rust
-        run: rustup component add rustfmt clippy
+      - name: install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
       - name: Cargo Cache
         uses: actions/cache@v4
         with:
@@ -49,7 +62,10 @@ jobs:
           key: ${{ runner.os }}-cargo-test-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-
       - name: Run tests
-        run: cargo test --workspace
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --workspace
 
   deploy_release:
     needs: [build, test]
@@ -96,18 +112,23 @@ jobs:
     needs: [build, test]
     runs-on: ${{ matrix.os }}
     if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install Rust
-        run: |
-          rustup target add ${{ matrix.target }}
-          rustup component add rust-src
-      - name: Install cross
-        if: contains(matrix.tool, 'cross')
-        run: cargo install cross
+      - name: install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          target: ${{ matrix.target }}
       - name: Build binary
-        run: ${{ matrix.tool }} build --workspace --release --locked --target=${{ matrix.target }}
+        uses: actions-rs/cargo@v1
+        with:
+          use-cross: ${{ matrix.cross }}
+          command: build
+          args: --workspace --release --locked --target=${{ matrix.target }}
       - name: Upload binary
         if: matrix.os != 'windows-latest'
         uses: svenstaro/upload-release-action@v2
