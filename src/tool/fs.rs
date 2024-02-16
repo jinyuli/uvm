@@ -312,26 +312,3 @@ pub enum FSError {
     #[error("file type '{0}' is not supported")]
     UnsupportedFile(&'static str),
 }
-
-#[cfg(test)]
-mod test {
-    use std::path::Path;
-
-    use super::decompress;
-
-    #[test]
-    fn test_decompress() {
-        // let result = decompress(Path::new(r"C:\Users\jinyu\Downloads\compress\openjdk-19.0.1_windows-x64_bin.zip"), Path::new(r"C:\Users\jinyu\Downloads\compress\de\"));
-        // println!("{:?}", result);
-        // assert!(result.is_ok());
-        // let result = decompress(Path::new(r"C:\Users\jinyu\Downloads\compress\node-v17.4.0-win-x64.7z"), Path::new(r"C:\Users\jinyu\Downloads\compress\de\"));
-        // println!("{:?}", result);
-        // assert!(result.is_ok());
-        let result = decompress(
-            Path::new(r"C:\Users\jinyu\Downloads\compress\node-v16.20.2-linux-x64.tar.gz"),
-            Path::new(r"C:\Users\jinyu\Downloads\compress\de\"),
-        );
-        println!("{:?}", result);
-        assert!(result.is_ok());
-    }
-}
