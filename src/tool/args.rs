@@ -13,9 +13,16 @@ pub struct UVMCommand {
 pub enum TopCommand {
     // Config(ConfigCommand),
     Update(AppUpdateCommand),
+    Version(AppVersionCommand),
     Go(GoCommand),
     Node(NodeCommand),
     Java(JavaCommand),
+}
+
+#[derive(FromArgs, PartialEq, Debug)]
+/// show uvm version.
+#[argh(subcommand, name="version")]
+pub struct AppVersionCommand {
 }
 
 #[derive(FromArgs, PartialEq, Debug)]
