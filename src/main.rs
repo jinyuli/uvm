@@ -47,7 +47,14 @@ fn main() {
         TopCommand::Update(_) => {
             execute_update();
         }
+        TopCommand::Version(_) => {
+            execute_version();
+        }
     }
+}
+
+fn execute_version() {
+    println!("uvm {}", env!("CARGO_PKG_VERSION"));
 }
 
 fn execute_update() {
