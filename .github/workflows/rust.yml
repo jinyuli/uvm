@@ -107,7 +107,7 @@ jobs:
         if: endsWith(matrix.target, 'musl')
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: musl-tools
+          packages: libssl-dev musl-tools
       - name: Install Rust
         run: |
           rustup target add ${{ matrix.target }}
