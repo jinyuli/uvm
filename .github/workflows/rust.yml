@@ -117,6 +117,8 @@ jobs:
         run: cargo install cross
       - name: Build binary
         run: ${{ matrix.tool }} build --workspace --release --locked --target=${{ matrix.target }}
+        env:
+          PKG_CONFIG_SYSROOT_DIR: /
       - name: Upload binary
         if: matrix.os != 'windows-latest'
         uses: svenstaro/upload-release-action@v2

@@ -1,28 +1,39 @@
-$release = "0.1.0"
+param(
+    $abi = "msvc",
+    $arch = "x86_64"
+)
+
+$release = "0.1.0-alpha.10"
 $os = "windows"
-$arch = "amd64"
 
 $base_dir = "$HOME\.uvm"
-$dest_file = "${base_dir}\downloads\uvm${release}.${os}-${arch}.zip"
-$url = "https://github.com/jinyuli/uvm/releases/download/v${release}/uvm${release}.${os}-${arch}.zip"
+$dest_file = "${base_dir}\downloads\uvm${release}.${os}-${arch}.exe"
+$url = "https://github.com/jinyuli/uvm/releases/download/v${release}/uvm-${arch}-pc-${os}-${abi}.exe"
 
-function NewDirs () {
+function Uvm-New-Dirs {
     New-Item -Force -Path "$base_dir\downloads", "$base_dir\bin" -ItemType "directory"
 }
 
-function CleanDirs() {
-    Remove-Item -Recurse -Path "$base_dir"
+function Uvm-Clean-Dirs {
+    Remove-Item -Recurse -Path "$base_dir\downloads"
 }
 
-function DownloadRelease() {
-    Invoke-WebRequest -Uri "$url" -OutFile "$dest_file"
+function Uvm-Download-Release {
+    $StatusCode = 400
+    try {
+        Invoke-WebRequest -Uri "$url" -OutFile "$dest_file"
+        $StatusCode = 200
+    } catch {
+        Write-Error "Failed to download file: $PSItem"
+    }
+    return $StatusCode
 }
 
-function Install () {
-    Expand-Archive -Path "$dest_file" -DestinationPath "$base_dir\bin\" -Force
+function Uvm-Install {
+    Copy-Item "$dest_file" -Destination "$base_dir\bin\uvm.exe"
 }
 
-function setPath() {
+function Uvm-Set-Path {
     $paths = [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::User) -split ';'
     $newPaths = @("$base_dir\bin")
 
@@ -42,13 +53,18 @@ function setPath() {
 }
 
 Write-Host -ForegroundColor Blue "[1/3] Downloading ${url}"
-NewDirs
-DownloadRelease
+Uvm-New-Dirs
 
-Write-Host -ForegroundColor Blue "[2/3] Install uvm to the ${base_dir}\bin"
-Install
+$StatusCode = Uvm-Download-Release
 
-Write-Host -ForegroundColor Blue "[3/3] Set environment variables"
-setPath
+if ($StatusCode -eq 200) {
+    Write-Host -ForegroundColor Blue "[2/3] Install uvm to the ${base_dir}\bin"
+    Uvm-Install
 
-Write-Host -ForegroundColor Green "uvm $release installed!"
+    Write-Host -ForegroundColor Blue "[3/3] Set environment variables"
+    Uvm-Set-Path
+
+    Write-Host -ForegroundColor Green "uvm $release installed!"
+}
+
+Uvm-Clean-Dirs
