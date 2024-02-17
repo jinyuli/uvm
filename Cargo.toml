@@ -1,6 +1,6 @@
 [package]
 name = "uvm"
-version = "0.1.0-alpha.8"
+version = "0.1.0-alpha.9"
 edition = "2021"
 categories = ["command-line-interface"]
 keywords = ["version"]
@@ -40,3 +40,6 @@ flate2 = "1.0.28"
 tar = "0.4.40"
 self_update = { version = "0.39.0", features = [ "archive-tar", "archive-zip", "tar", "zip" ]}
 futures-util = "0.3.30"
+
+[target.'cfg(target_arch = "aarch64")'.dependencies]
+openssl = { version = "0.10.63", features = ["vendored"] }
