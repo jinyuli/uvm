@@ -1,15 +1,13 @@
 [package]
 name = "uvm"
-version = "0.1.0-alpha.10"
+version = "0.1.0"
 edition = "2021"
 categories = ["command-line-interface"]
 keywords = ["version"]
 license = "MIT"
-description = "Unified version manager, support Java, Golang, NodeJS."
+description = "Unified version manager, supports Java, Golang, NodeJS."
 repository = "https://github.com/jinyuli/uvm"
 readme = "README.md"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 argh = "0.1.12"

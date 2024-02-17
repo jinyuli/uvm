@@ -4,6 +4,38 @@
 
 ## Install
 
+### Automated
+
+- Linux/macOS (bash/zsh)
+
+  for linux, 'gnu' is the default abi in [target triple](https://doc.rust-lang.org/cargo/commands/cargo-build.html), if you are not sure what to use, use the default.
+  ```shell
+  $ curl -sSL https://raw.githubusercontent.com/jinyuli/uvm/master/install.sh | bash
+  ```
+  the script accepts one argument `--abi`.
+
+  to enable `uvm` command in current shell
+  ```shell
+  $ source "$HOME/.uvm/env"
+  ```
+
+- Windows (pwsh)
+
+  ```pwsh
+  $ iwr https://raw.githubusercontent.com/jinyuli/uvm/master/install.ps1 -useb | iex
+  ```
+  the script accepts two parameters `-abi`(by default it's 'msvc') and `-arch`(by default it's 'x86_64')
+
+### Manual 
+
+- Linux/MacOS
+    - Create a directory for `uvm` (recommended: `~/.uvm`), download executable file from [releases](https://github.com/jinyuli/uvm/releases), and copy it to the `bin` subdirectory of the `uvm` directory (i.e. `~/.uvm/bin`), rename it to `uvm`.
+    - Update system `PATH` to include `uvm` path.
+
+- Windows
+    - Create a directory for `uvm` (recommended: `~/.uvm`), download executable file from [releases](https://github.com/jinyuli/uvm/releases), and copy it to the `bin` subdirectory of the `uvm` directory (i.e. `~/.uvm/bin`), rename it to `uvm.exe`.
+    - Update system `PATH` to include `uvm.exe` path.
+
 ## Features
 
 ### Golang
