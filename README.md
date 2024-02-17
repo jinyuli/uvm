@@ -10,19 +10,19 @@
 
   for linux, 'gnu' is the default abi in [target triple](https://doc.rust-lang.org/cargo/commands/cargo-build.html), if you are not sure what to use, use the default.
   ```shell
-  $ curl -sSL https://raw.githubusercontent.com/voidint/g/master/install.sh | bash
+  $ curl -sSL https://raw.githubusercontent.com/jinyuli/uvm/master/install.sh | bash
   ```
   the script accepts one argument `--abi`.
 
   to enable `uvm` command in current shell
   ```shell
-  $ source "$HOME/.g/env"
+  $ source "$HOME/.uvm/env"
   ```
 
 - Windows (pwsh)
 
   ```pwsh
-  $ iwr https://raw.githubusercontent.com/voidint/g/master/install.ps1 -useb | iex
+  $ iwr https://raw.githubusercontent.com/jinyuli/uvm/master/install.ps1 -useb | iex
   ```
   the script accepts two parameters `-abi`(by default it's 'msvc') and `-arch`(by default it's 'x86_64')
 
