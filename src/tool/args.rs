@@ -2,7 +2,7 @@ use argh::FromArgs;
 
 
 #[derive(FromArgs, PartialEq, Debug)]
-/// uvm - unified version manager, provides version management for programming languages.
+/// uvm - unified version manager, provides version management for programming languages, currently supports NodeJS, Golang and Java.
 pub struct UVMCommand {
     #[argh(subcommand)]
     pub top: TopCommand,
